@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#board{
+   width: 500px;
+   height: 400px;
+   background: gray;
+   position: relative;
+
+}
+.card{
+   width: 100px;
+   height: 100px;
+   background: yellow;
+   position: absolute;
+   
+   
+}
+</style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function(event){
+      //get은 dom eq는 jquery 객체
+      var locations = [
+         {left:"400px", top:"0px"},
+         {left:"400px", top:"150px"},
+         {left:"400px", top:"300px"},
+         {left:"250px", top:"400px"},
+         {left:"0px", top:"400px"},
+         {left:"200px", top:"200px"}
+      ]   
+      var cards = $(".card");
+      /* 
+      $(".card").draggable();
+      for(var i=0;i<cards.length;i++)
+      cards
+      .eq(i)
+      .delay(1008*i)
+      .animate(locations[i]); */
+      
+    var rotateButton = $("#rotate");
+      ratateButton.click(function(e){
+         var temp
+         locations[1]=locations[2]
+         locations[2]=locations[3]
+         locations[3]=locations[4]
+         locations[4]=locations[5]
+         locations[5]=locations[6]
+         locations[1]=locations[2]
+      }); 
+      
+
+   }); 
+   window.addEventListener("load", function(event){
+      var cards = document.querySelectorAll("#board");
+      var cards = document.querySelectorAll("#board .card");
+      var selected = null;
+      
+      $("#board .card").draggable();
+      
+      
+    /*   document.onmousedown = function(e){
+         
+         if(e.target.classList.contains("card")){
+            selected = e.target;
+         }
+      } */
+      document.onmousemove = function(e){
+         //alert("d");
+         
+         console.log("client"+e.clientX,e.clientY);
+         console.log("screen"+e.screenX,e.screenY);
+         console.log("offset"+e.offsetX,e.offsetY);
+         console.log("client"+e.clientX,e.clientY);
+         console.log("e.x:"+e.x,e.y); 
+         //offset이 실제로 가장 가깝다.
+      /* e.target.style.left = e.x+"px";
+         e.target.style.top = e.y+"px"; */
+         if(selected == null)
+            return;
+         /* selected.style.left = e.offsetX+"px";
+         selected.style.top = e.offsetY+"px";
+          */
+         selected.style.left = e.offsetX-board.offsetLeft+"px";
+         selected.style.top = e.offsetY-board.offsetTop+"px";
+     //console.log("e.x :" e.x);
+         
+      };
+      document.onmouseup = function(e){
+         selected = null;
+      };
+   });
+</script>
+</head>
+<div>
+<input id="rotate" type="button" value="회전하기"></div>
+<body>
+   <div id="board">
+   <div class="card">1</div>
+   <div class="card">2</div>
+   <div class="card">3</div>
+   <div class="card">4</div>
+   <div class="card">5</div>
+   <div class="card">6</div>
+   
+   </div>
+</body>
+</html>

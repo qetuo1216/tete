@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#drop-jon{
+		width : 500px;
+		height : 200px;
+		border : 1px solid lime;
+	}
+</style>
+<script>
+	window.addEventListener("load", function(event){
+		var dropJon = document.querySelector("#drop-jon");
+		
+		dropJon.addEventListener("dragenter", function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			
+			dropJon.style.background = "pink";
+			
+			console.log("enter");
+		});
+		
+		dropJon.addEventListener("dragover", function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			
+			console.log("over");
+		});
+		
+		dropJon.addEventListener("dragleave", function(e){
+			e.stopPropagation();
+			e.preventDefault();
+
+			dropJon.style.background = "white";
+			
+			console.log("leave");
+		});
+		
+		dropJon.addEventListener("drop", function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			
+			console.log("drop");
+			
+			var isValidate = e.dataTransfer 
+							&& e.dataTransfer.types
+							&& e.dataTransfer.types[0].indexOf("Files")
+			
+							//파일 형식이 아니면 리턴하기
+			if(!isValidate) {
+				alert("파일 형식이 올바르지 않습니다.");
+				return;
+			}
+			
+			var count = e.dataTransfer.files.lenth;
+			if(count > 1){
+				alert("파일은 하나씩 전송할 수 있습니다.");
+				return;
+			}
+			
+			var file = e.dataTransfer.file[0];
+			
+			var size = e.dataTransfer.file[0].size;
+			if(size > 300*1024*1024){
+				alert("죄송합니다. 300mbyte 넘어가면 파일 전송 안됨");
+				return;
+			}
+			
+			//String ***
+			//key=value&key=value&key=value
+			
+			var formData = new fromData();
+			formData.append("key", files[0]);
+			
+			var xhr = new XmlHttpRequest();
+			xhr.upload.addEventListener("progress", function(evt){
+				
+			});
+			xhr.addEventListener("load", function(evt){
+				
+			});
+			
+			xhr.open("POST", "uplaod");
+			xhr.send(formData);
+			//for(var key in files)
+			
+			//....
+			//filesize : ...
+			//filename : ....
+			//body : 010101010101010
+			//.....
+			
+			
+		});
+	}); 
+</script>
+</head>
+<body>
+	<div id="drop-jon">
+	</div>
+</body>
+</html>
